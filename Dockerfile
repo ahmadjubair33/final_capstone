@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-
-  
->>>>>>> 7f5204b3696a5430504369ff3dd10c65e6031335
 FROM maven:3.6.0-jdk-8 as maven
 
 # copy the project files
