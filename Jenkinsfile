@@ -24,7 +24,9 @@ pipeline {
 
    }
    stage("packaging"){
-           
+         when{
+                branch "production"
+                }  
          steps
             {
                 sh 'mvn package'
@@ -32,6 +34,9 @@ pipeline {
    }
    stage('build image')
         {
+         when{
+                branch "production"
+                }
             steps{
                 sh 'echo $dockerhub_USR | xargs echo'
                 sh 'docker build -t final-caps:1.01 .'
@@ -40,6 +45,9 @@ pipeline {
 
         stage('pushing to dockerhub')
         {
+          when{
+                branch "production"
+                }
             steps{
                 sh 'docker tag final-caps:1.01 ahmad33/user-management:1.01 '
                 sh 'docker login -u $dockerhub_USR -p $dockerhub_PSW'
