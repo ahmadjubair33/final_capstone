@@ -1,0 +1,48 @@
+---
+# tasks file for jenkins
+# - name: Download Jenkins repo apt URL for  
+#   get_url:
+#     url: "{{jenkins.repo_URL}}"
+#     dest: /etc/apt/sources.list.d/jenkins.list
+#   become: true
+
+# - name: Import GPG Key
+#   apt_key:
+#     state: present
+#     key: "{{jenkins.gpg_key}}"
+- name: ensure the jenkins apt repository key is installed
+  apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
+  become: yes
+
+- name: ensure the repository is configured
+  apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
+  become: yes
+  
+- name: apt update
+  apt: update_cache=yes
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: present
+
+# - name: Change Jenkins JAVA options
+#   lineinfile: 
+#     dest=/etc/sysconfig/jenkins
+#     regexp=^JENKINS_JAVA_OPTIONS=
+#     line=JENKINS_JAVA_OPTIONS="{{ jenkins.JAVA_OPTIONS }}"
+#   become: true
+
+- name: Start Jenkins service and enable on boot
+  service:
+    name: jenkins
+    state: started
+    enabled: yes
+- name: Get init password Jenkins
+  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  changed_when: false
+  register: result
+ 
+- name: Print init password Jenkins
+  debug:
+    var: result.stdout
