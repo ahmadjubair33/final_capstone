@@ -11,6 +11,7 @@ COPY ./src ./src
 
 # build for release
 RUN mvn package -DskipTests
+ENV MYSQL_URL=localhost MYSQL_PORT=3306 MYSQL_USR=admin MYSQL_PW=admin
 
 # our final base image
 FROM openjdk:8-jre-alpine
