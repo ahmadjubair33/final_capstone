@@ -19,7 +19,7 @@ pipeline {
            
          steps
             {
-                sh 'mvn clean test'
+                sh 'mvn clean compile'
             }
 
    }
@@ -29,7 +29,7 @@ pipeline {
                 }  
          steps
             {
-                sh 'mvn package'
+                sh 'mvn package -DskipTests'
             }
    }
    stage('build image')
