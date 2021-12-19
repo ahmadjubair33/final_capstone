@@ -75,3 +75,4 @@ spec:
           requests:
             storage: 500Mi
         storageClassName: fast
+
