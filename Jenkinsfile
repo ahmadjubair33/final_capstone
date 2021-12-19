@@ -39,7 +39,7 @@ pipeline {
                 }
             steps{
                 sh 'echo $dockerhub_USR | xargs echo'
-                sh 'docker build -t final-caps:1.01 .'
+                sh 'docker build -t capstone:1.01 .'
             }
         } 
 
@@ -49,11 +49,23 @@ pipeline {
                 branch "production"
                 }
             steps{
-                sh 'docker tag final-caps:1.01 ahmad33/user-management:1.01 '
+                sh 'docker tag capstone:1.01 ahmad33/starter-kit:1.01 '
                 sh 'docker login -u $dockerhub_USR -p $dockerhub_PSW'
 
-                sh 'docker push ahmad33/user-management:1.01'
+                sh 'docker push ahmad33/starter-kit:1.01'
+            }
+        }
+        stage('deploy')
+        {
+            when{
+                branch "production"
+                }
+            steps{
+                script{
+                 kubernetesDeploy configs: '**/deployment.yml', kubeConfig: [path: ''], kubeconfigId: 'kubeconfig', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                }
             }
         }
 }
 }
+
