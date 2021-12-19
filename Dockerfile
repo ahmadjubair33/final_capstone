@@ -1,3 +1,4 @@
+# our base build image
 FROM maven:3.6.0-jdk-8 as maven
 
 # copy the project files
@@ -16,10 +17,10 @@ RUN mvn package -DskipTests
 FROM openjdk:8-jre-alpine
 
 # set deployment directory
-WORKDIR /final-capstone
+WORKDIR /my-project
 
 # copy over the built artifact from the maven image
-COPY --from=maven target/User-Management-0.0.1-SNAPSHOT.jar ./
+COPY --from=maven target/springboot-starterkit-1.0.jar ./
 
 # set the startup command to run your binary
-CMD ["java", "-jar", "./User-Management-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "./springboot-starterkit-1.0.jar"]
