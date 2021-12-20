@@ -253,7 +253,7 @@ These components can be located in the resources/templates directory at the root
 - Profile
 ### i am
 Also, an error page for any unhandled exception is designed with the name "error.html". The login and signup pages are designed separately from the portal accessible to a logged-in user.
-
+## RUn
 ## Running the server locally ##
 To be able to run this Spring Boot app you will need to first build it. To build and package a Spring Boot app into a single executable Jar file with a Maven, use the below command. You will need to run it from the project folder which contains the pom.xml file.
 
