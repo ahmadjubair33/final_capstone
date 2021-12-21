@@ -19,6 +19,8 @@ pipeline {
            
          steps
             {
+
+
                 sh 'mvn test'
             }
 
@@ -38,7 +40,7 @@ pipeline {
                 branch "production"
                 }
             steps{
-                sh 'echo $dockerhub_USR | xargs echo'
+                // sh 'echo $dockerhub_USR | xargs echo'
                 sh 'docker build -t capstone:1.01 .'
             }
         } 
