@@ -197,7 +197,7 @@ Last, the API response are all being sent in a uniform manner using the **_Respo
     ]
 }
 ```
-## hello world
+
 And when there is an exception (for example searching for a trip between two stops which are not linked by any bus) the following responses are sent back (result of "api/v1/reservation/tripsbystops" GET request) :
 
 ```
