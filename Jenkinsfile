@@ -19,16 +19,12 @@ pipeline {
            
          steps
             {
-
-
                 sh 'mvn test'
             }
 
    }
    stage("packaging"){
-         when{
-                branch "production"
-                }  
+         
          steps
             {
                 sh 'mvn package -DskipTests'
@@ -36,9 +32,7 @@ pipeline {
    }
    stage('build image')
         {
-         when{
-                branch "production"
-                }
+         
             steps{
                 // sh 'echo $dockerhub_USR | xargs echo'
                 sh 'docker build -t capstone:1.01 .'
@@ -47,9 +41,7 @@ pipeline {
 
         stage('pushing to dockerhub')
         {
-          when{
-                branch "production"
-                }
+          
             steps{
                 sh 'docker tag capstone:1.01 ahmad33/starter-kit:1.01 '
                 sh 'docker login -u $dockerhub_USR -p $dockerhub_PSW'
@@ -59,9 +51,7 @@ pipeline {
         }
         stage('deploy')
         {
-            when{
-                branch "production"
-                }
+            
             steps{
                 script{
                  kubernetesDeploy configs: '**/deployment.yml', kubeConfig: [path: ''], kubeconfigId: 'kubeconfig', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
